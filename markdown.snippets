@@ -1,3 +1,45 @@
+snippet app
+	[${2:r fa_play_circle()} App](${1:link})
+
+snippet falink
+	[${3:r fa_function()} ${1:Reference}](${2:link})
+
+snippet fgeo
+	The __fgeo__ package is a collection of R packages curated by
+	[ForestGEO](http://www.forestgeo.si.edu/). __fgeo__ installs and loads
+	multiple R packages in a single step. Each individual package is a
+	self-contained module that provides tools for a particular type of analyses.
+	The modular structure of __fgeo__ makes it easy to maintain and expand
+	ForestGEO's software. Together, all packages in __fgeo__ provide a wide renge
+	of tools to analyse forest dynamics.  Learn more about the __fgeo__ package at
+	<http://forestgeo.github.io/fgeo>; and learn more about ForestGEO at
+	<http://www.forestgeo.si.edu/>.
+
+snippet h2
+	${1:COLUMN ---}${2:ROW ---} ${3:{data-width=100\}}
+	------------------------------------------------------------------------
+	
+	${4:}
+
+snippet h1
+	${1:Page Title}
+	========================================================================
+	
+	${2:}
+
+snippet h3
+	### ${1:Section Header} ${2:{data-width=100\}}
+	
+	${3:}
+
+snippet readme
+	---
+	output: 
+	  html_document:
+	    theme: united
+	    keep_html: no
+	---
+
 snippet rmd
 	---
 	title: "${1:Title}"
@@ -6,8 +48,10 @@ snippet rmd
 	date: "`r Sys.Date()`"
 	output:
 	  rmarkdown::${3:html}_document:
+	    theme: united
 	    toc: true
 	    toc_depth: 6
+	    code_folding: hide
 	---
 
 	```{r setup, include=FALSE}
@@ -66,6 +110,9 @@ snippet rmd
 	update_geom_defaults("text", list(size = 4.5))
 	```
 
+snippet tutorial
+	[${2:r fa_book()} Tutorial](${1:link})
+
 snippet vig
 	---
 	title: "${1:Vignette Title}"
@@ -102,5 +149,32 @@ snippet vig
 
 	options(dplyr.print_min = 3, dplyr.print_max = 3, tidyverse.quiet = TRUE)
 	```
+	
+snippet img
+	<img src="${1:img}.png" align="right" width = 750 />
 
+snippet sql
+	```sql
+	${1:}
+	```
 
+snippet installation
+	## Installation
+	
+	Install the pre-release version of **${1:PACKAGE-NAME}**:
+	
+	```
+	# install.packages("devtools")
+	devtools::install_github("forestgeo/${1:PACKAGE-NAME}@pre-release")
+	```
+	
+	Or install the development version of **${1:PACKAGE-NAME}**:
+	
+	```
+	# install.packages("devtools")
+	devtools::install_github("forestgeo/${1:PACKAGE-NAME}")
+	```
+	
+	Or [install all **fgeo** packages in one step](https://forestgeo.github.io/fgeo/index.html#installation).
+
+	For details on how to install packages from GitHub, see [this article](https://goo.gl/dQKEeg).

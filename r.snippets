@@ -1,31 +1,6 @@
 snippet lib
 	library(${1:package})
 
-snippet req
-	require(${1:package})
-
-snippet src
-	source("${1:file.R}")
-
-snippet ret
-	return(${1:code})
-
-snippet mat
-	matrix(${1:data}, nrow = ${2:rows}, ncol = ${3:cols})
-
-snippet sg
-	setGeneric("${1:generic}", function(${2:x, ...}) {
-		standardGeneric("${1:generic}")
-	})
-
-snippet sm
-	setMethod("${1:generic}", ${2:class}, function(${2:x, ...}) {
-		${0}
-	})
-
-snippet sc
-	setClass("${1:Class}", slots = c(${2:name = "type"}))
-
 snippet if
 	if (${1:condition}) {
 		${0}
@@ -40,13 +15,6 @@ snippet ei
 	else if (${1:condition}) {
 		${0}
 	}
-
-snippet gitcommit
-	git commit -m "${1:Message}"
-
-snippet gitrepo
-	git remote add origin https://github.com/${1:forestgeo}/${2:repo}.git
-	git push -u origin master
 
 snippet fun
 	${1:name} <- function(${2:variables}) {
@@ -83,26 +51,18 @@ snippet mapply
 snippet tapply
 	tapply(${1:vector}, ${2:index}, ${3:function})
 
-snippet vapply
-	vapply(${1:list}, ${2:function}, FUN.VALUE = ${3:type}, ${4:...})
+snippet vapply_chr
+	vapply(
+		${1:list(a = letters[1:2], b = letters[1:2])}, 
+		${2:function(x) x}, 
+		FUN.VALUE = ${3:character(2)}
+	)
 
 snippet rapply
 	rapply(${1:list}, ${2:function})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+snippet travis_warnings_are_errors
+	warnings_are_errors: false
 
 snippet author
 	Authors@R: c(
@@ -110,193 +70,353 @@ snippet author
 		person("CTFS-ForestGEO", , , "ForestGEO@si.edu", role = c("cph", "fnd"))
 		)
 
-snippet clean
-	source("clean_directories.R")
-
-snippet dpa
-	dplyr::arrange(${1:})
-
-snippet dpf
-	dplyr::filter(${1:})
-
-snippet dpg
-	dplyr::group_by(${1:})
-
-snippet dpm
-	dplyr::mutate(${1:})
-
-snippet dps
-	dplyr::select(${1:})
-
-snippet dpsz
-	dplyr::summarize(${1:})
+snippet require_pkg
+	${1:pkg}_is_installed <- requireNamespace("${1:pkg}", quietly = TRUE)
+	if (${1:pkg}_is_installed) {
+		library(${1:pkg})
+		
+		${2:CODE}
+	} 
+	
+snippet require_fgeo_or_stop
+	missing_pkg <- !requireNamespace("${1:fgeo}", quietly = TRUE)
+	if (missing_pkg) stop("See https://forestgeo.github.io/${1:fgeo}")
 
 snippet figsize
 	fig.align="default", out.width="${1:5}0%", fig.widh=(6 * 0.${1:5} / 0.${2:7})
 
-snippet forestr-title
-	Tools for the Analysis of Forest Dynamics
+snippet fig_map
+	out.width = "98%", 
+	fig.width = 9.5, 
+	fig.asp = 0.7
 
-snippet forestr-description
-	This package provides tools for the analysis of forest dynamics.
+snippet lifecycle
+	(The developmental stage of this package is according to 
+	[this website](https://www.tidyverse.org/lifecycle/).)
 
-snippet forestr-acknowledgement
-	The BCI forest dynamics research project was founded by S.P. Hubbell and R.B.
-	Foster and is now managed by R. Condit, S. Lao, and R. Perez under the Center
-	for Tropical Forest Science and the Smithsonian Tropical Research in Panama.
-	Numerous organizations have provided funding, principally the U.S. National
-	Science Foundation, and hundreds of field workers have contributed.
+snippet logo
+	<img src="https://i.imgur.com/vTLlhbp.png" align="right" height=88 />
 
-snippet forestr-references
-	Anderson-Teixeira, K. J., Davies, S. J., Bennett, A. C., Gonzalez-Akre, E. B.,
-	Muller-Landau, H. C., Joseph Wright, S., . . . Zimmerman, J. 2015.
-	CTFS-ForestGEO: a worldwide network monitoring forests in an era of global
-	change. Global Change Biology, 21(2), 528-549. doi:10.1111/gcb.12712 Hubbell,
-	S.P., Condit, R., and Foster, R.B. 2010. Barro Colorado Forest Census Plot
-	Data. [URL](http://ctfs.si.edu/webatlas/datasets/bci).
+snippet notebook
+	---
+	title: "R Notebook"
+	output: 
+		rmarkdown::html_notebook:
+			toc: true
+			toc_depth: 6
+			theme: united
+	---
+		
+	```{r setup, include=FALSE}
+	set.seed(1014)
+	options(digits = 3)
+	
+	knitr::opts_chunk\$set(
+		echo = TRUE,
+		comment = "#>",
+		collapse = TRUE,
+		cache = TRUE,
+		out.width = "70%",
+		fig.align = "center",
+		fig.width = 6,
+		fig.asp = 0.618,	# 1 / phi
+		fig.show = "hold"
+	)
+	```
 
-	Condit, R. 1998. Tropical Forest Census Plots. Springer-Verlag and R. G.
-	Landes Company, Berlin, Germany, and Georgetown, Texas.
+snippet readme_html
+	output: 
+	 	html_document:
+			keep_md: true
 
-	Hubbell, S.P., R.B. Foster, S.T. O'Brien, K.E. Harms, R. Condit, B. Wechsler,
-	S.J. Wright, and S. Loo de Lao. 1999. Light gap disturbances, recruitment
-	limitation, and tree diversity in a neotropical forest. Science 283: 554-557.
+snippet readme_github
+	output: github_document
+	always_allow_html: yes
 
-snippet bignore
-	devtools::use_build_ignore("${1:what}")
-
-
-snippet odata
-	handy::open_data()
-
-snippet odr
-	handy::open_data_raw()
-
-snippet oi
-	handy::open_inst()
-
-snippet man
-	handy::open_man()
-
-snippet op
-	handy::open_proj()
-
-snippet or
-	handy::open_r()
-
-snippet ot
-	handy::open_tests()
-
-snippet ott
-	handy::open_testthat()
-
-
-snippet pkgdown
-	template:
-		params:
-			bootswatch: united
-
-
-
-	home:
-		links:
-		- text: Learn more
-			href: http://www.forestgeo.si.edu/
-
-
-
-	reference:
-		- title: "xxx Function category"
-			desc: >
-				xxx Function subcategory
-			contents:
-				- xxxfunctionname
-				- xxxfunctionname
-
-		- title: "xxx Function category"
-			desc: >
-				xxx Function subcategory
-			contents:
-				- xxxfunctionname
-				- xxxfunctionname
-
-		- title: "xxx Dataset category"
-			desc: >
-				xxx Dataset subcategory
-			contents:
-				- xxxdatasetname
-				- xxxdatasetname
-
-
-
-	articles:
-		- title: "xxx Tutorial category"
-			desc: >
-				xxx Tutorial subcategory
-			contents:
-			- xxxtutorialname
-
-		- title: "xxx Tutorial category"
-			desc: >
-				xxx Tutorial subcategory
-			contents:
-			- xxxtutorialname
-
-
-
-	navbar:
-		type: default
-		left:
-			- text: Functions Index
-				href: reference/index.html
-			- text: Tutorials
-			href: articles/index.html
-
+snippet reprex_temp.R
+	reprex::reprex(input = "${1:tmp}.R")
+	
 snippet reprex
 	reprex::reprex()
 
-snippet rtbl-title
-	Convert ForestGEO's data to a format that researchers can use.
+snippet serve
+	blogdown:::serve_site()
 
-snippet rtbl-description
-	The goal of **rtbl** (pronounce r-t-bl) is to convert the output of
-	ForestGEO's database  to a format that researchers can use. Tables in that
-	"usable" format is commonly referred to as R tables.
-
-snippet section
-	# ${1:Section} ----
-
-snippet site
-	pkgdown::build_site()
-
-snippet tab
-	tab_${1:id} <- "${2:Descriptoin (one line).}"
-
-snippet tag
-	tag_${1:ID} <- "${2:Descriptoin (one line).}"
-
-snippet tidy
-	library(tidyverse)
-
-snippet ts
-	`r paste("#", date(), "------------------------------\n")`
-
-snippet use
-	usethis::use_${1:what?}
-
-
-snippet test
+snippet tt
 	test_that("${1:}", {
 		${2:}
 	})
 
-snippet ff
-	`${1:name}()` ${2:continue}
+snippet ut
+	use_test()
 
-snippet yosemite-title
-	Data from Yosemite, exclusively for Mauro Lepore.
+snippet ur
+	use_r()
 
-snippet yosemite-description
-	The goal of __yosemite__ is for Mauro to have easy and exclusive access to data from
-	the Yosemite plot. That data is private and must be kept local. The source was
-	Suzanne Lao (see forestgeo/rtbl/issues/5).
+snippet spell_check_DESCRIPTION
+	spelling::spell_check_text(writeLines("DESCRIPTION"))
+
+snippet set_names_fgeo
+	# Allow using datasets with different name case (e.g. Col versus col)
+	old <- names(${1:fgeo})
+	names(${1:fgeo}) <- tolower(names(${1:fgeo}))
+	
+	${1:fgeo} <- ${2:# FIXME: add code here}
+	
+	# Restore old names
+	names(${1:fgeo}) <- old
+	${1:fgeo}
+
+snippet warn_call
+	warning("${1:xxxxxx}", call. = FALSE)
+	
+snippet stop_call
+	stop("${1:xxxxxx}", call. = FALSE)
+
+snippet readme_fig_path
+	fig.path = "man/figures/README-"
+
+snippet no_verify
+	git commit --no-verify -a -m "${1:message}"
+
+snippet dbo
+	debugonce(${1:function})
+
+snippet runex
+	run_examples(fresh = TRUE, run = TRUE)
+
+snippet test_fgeo
+	vet::test_pkgs(${1:fgeo:::fgeo_packages()})
+
+snippet check_fgeo
+	vet::check_pkgs(${1:fgeo:::fgeo_packages()})
+
+snippet error_recover
+	op <- options(error = recover)
+
+snippet op_restore
+	options(op)
+
+snippet method_to_df
+	#' Dataframe objects of class "${1:class}".
+	#' 
+	#' This method creates a dataframe from the output of `fgeo.${2:pkg}::${3:fun}`
+	#' (which is ${4:a list }of class "${1:class}").
+	#' 
+	#' @seealso [to_df()].
+	#' 
+	#' @family methods for fgeo generics
+
+snippet github_document
+	usethis::use_template("github_document.Rmd", package = "fgeo.template")
+
+snippet clipboard
+	${1:vector} %>% 
+		paste0(collapse = "\n") %>% 
+		clipr::write_clip()
+
+snippet grep_fgeo
+	grep -R "${1:XXX}" ../fgeo.x${2:}
+	grep -R "${1:XXX}" ../fgeo.tool${2:}
+	grep -R "${1:XXX}" ../fgeo.analyze${2:}
+	grep -R "${1:XXX}" ../fgeo.plot${2:}
+	grep -R "${1:XXX}" ./fgeo${2:}
+
+
+snippet git_setup
+	git config --global push.default current
+	
+	git remote add upstream git@github.com:forestgeo/fgeo.${1:PACKAGE}.git
+	git remote -v
+	
+	# https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
+	git checkout master
+	git fetch upstream
+	git reset --hard upstream/master
+	
+	git checkout -b ${2:FEATURE}
+	git push -u ${3:origin} ${2:FEATURE}
+
+snippet git_config_push
+	git config --global push.default current
+
+snippet git_remote_add_upstream
+	git remote add upstream git@github.com:forestgeo/fgeo.${1:PACKAGE}.git
+	git remote -v
+
+snippet grep_fgeo
+	grep -R "${1:PATTERN}"  ./fgeo/${2:R}
+	grep -R "${1:PATTERN}" ../fgeo.x/${2:R}
+	grep -R "${1:PATTERN}" ../fgeo.tool/${2:R}
+	grep -R "${1:PATTERN}" ../fgeo.plot/${2:R}
+	grep -R "${1:PATTERN}" ../fgeo.analyze/${2:R}
+
+snippet git_reset_master
+	git checkout master
+	git fetch ${1:upstream}
+	git reset --hard ${1:upstream}/master
+	
+	git remote prune origin
+
+snippet git_ammend
+	message="${1:Message}."
+	git add .
+	git commit --amend -m "\$message"
+
+snippet expect_printed_output
+	expect_printed_output <- function(object, update = FALSE) {
+		file <- rlang::quo_text(rlang::enquo(object))
+		
+		testthat::expect_known_output(
+			object, paste0("ref-", file),
+			print = TRUE, update = update
+		)
+		
+		invisible(object)
+	}
+
+snippet navigate_to_path
+	shell.exec(${1:path})
+
+snippet refresh_docs
+	pkgdown::clean_site()
+	devtools::clean_vignettes()
+	devtools::document()
+	fgeo::fgeo_help(rebuild = TRUE)
+	pkgdown::build_site()
+
+snippet has_internet
+	has_internet <- function() {
+		z <- try(suppressWarnings(readLines('https://www.google.com', n = 1)),
+				silent = TRUE)
+		! inherits(z, "try-error")
+	}
+	
+	skip_if_net_down <- function() {
+		if (has_internet()) {
+			return()
+		}
+		testthat::skip("no internet")
+	}
+
+snippet is_online
+	pingr::is_online()
+
+snippet install_release
+	## Installation
+	
+	Install the latest stable version of **fgeo.EDIT-PACKAGE** with:
+	
+	```
+	# install.packages("devtools")
+	devtools::install_github("forestgeo/fgeo.EDIT-PACKAGE@*release")
+	```
+	
+	Install the development version of **fgeo.EDIT-PACKAGE** with:
+	
+	```
+	# install.packages("devtools")
+	devtools::install_github("forestgeo/fgeo.EDIT-PACKAGE")
+	```
+	
+	Or [install all **fgeo** packages in one step](https://forestgeo.github.io/fgeo/index.html#installation).
+	
+snippet news_release
+	# fgeo.EDIT-PACKAGE (development version)
+	
+	* Work in progress.
+	
+	# fgeo.EDIT-PACKAGE 1.0.0 (GitHub release)
+	
+	* Initial GitHub release. Pass all checks required for submission to CRAN.
+
+snippet vet
+	pkgs <- paste0("fgeo", c(".tool", ".analyze", ".plot", ".krig", ".misc", ""))
+	vet::vet(pkgs, devtools::install)
+	vet::vet(pkgs, devtools::test)
+	vet::vet(pkgs, devtools::check)
+
+snippet git2r_credentials
+	# https://happygitwithr.com/ssh-keys.html#ssh-keys
+	cred <- git2r::cred_ssh_key(
+		publickey =  "~/../.ssh/id_rsa.pub",
+		privatekey = "~/../.ssh/id_rsa"
+	)
+	use_github(credentials = cred)
+
+snippet cran_comments
+	## Test environments
+	
+	* local windows 10 x64, R 3.5.2
+	* ubuntu 14.04 (on travis-ci), R 3.5.1
+	* win-builder (devel and release)
+	
+	## R CMD check results
+	
+	0 errors | 0 warnings | 3 notes
+	Platform:	Ubuntu Linux 16.04 LTS, R-release, GCC
+	Build ID:	fgeo.tool_1.0.0.tar.gz-0f72e41e51a84fcabc6c05c80881c26d
+	* New submission
+	* Unknown, possibly mis-spelled, fields in DESCRIPTION: ‘Remotes’
+	* Strong dependencies not in mainstream repositories: fgeo.x
+	
+	## Downstream dependencies
+	
+	There are currently no downstream dependencies for this package.
+
+snippet git_timetravel
+	git checkout -b ${1:timetravel} ${2:sha}
+
+snippet git_revert
+	git revert --no-edit HEAD
+
+snippet git_checkout_file
+	git checkout ${1:sha} -- ${2:R/some-file.R}
+
+snippet git_pull_upstream_ff_only
+	git remote -v
+	git remote add upstream git@github.com:${1:OWNER}/${2:USER}.git
+	git pull upstream master --ff-only
+	git push
+
+snippet git_branch_sha
+	git branch ${1:branchname} ${2:<sha1-of-commit>}
+
+snippet git_config_global_pull
+	git config --global pull.ff only
+
+snippet fgeo_like
+	_ViewFullTable_, _tree_, and _stem_ tables 
+
+snippet fgeo_x
+	#' @param ${1:x} A ForestGEO-like dataframe: A _ViewFullTable_, _tree_ or _stem_
+	#'   table.
+
+snippet fgeo_imports
+	fgeo.x (>= ${1:version}),
+	fgeo.tool (>= ${1:version}),
+	fgeo.analyze (>= ${1:version}),
+	fgeo.plot (>= ${1:version}),
+
+snippet fgeo_remotes
+	forestgeo/fgeo.x,
+	forestgeo/fgeo.tool,
+	forestgeo/fgeo.analyze,
+	forestgeo/fgeo.plot
+
+snippet fgeo_remotes_release
+	forestgeo/fgeo.x@*release,
+	forestgeo/fgeo.tool@*release,
+	forestgeo/fgeo.analyze@*release,
+	forestgeo/fgeo.plot@*release
+
+snippet slack
+	notifications:
+		slack: forestgeo:WtWMP7g7JbJsbPJOvBb3tTTn
+
+snippet git_orphan_gh_pages
+	git checkout --orphan gh-pages
+	git rm -rf .
+	git commit --allow-empty -m 'Initial gh-pages commit'
+	git push origin gh-pages
+	git checkout master
